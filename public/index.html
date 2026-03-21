@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — INF222</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F7F5F0;
+      --surface:   #FFFFFF;
+      --border:    #E2DDD6;
+      --text:      #1A1714;
+      --muted:     #7A746C;
+      --accent:    #2C4A3E;
+      --accent-lt: #EAF0EE;
+      --danger:    #8B2E2E;
+      --danger-lt: #F5EAEA;
+      --tag-bg:    #EDEDEA;
+      --radius:    4px;
+      --font-body: 'DM Sans', sans-serif;
+      --font-head: 'Lora', serif;
+      --shadow:    0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .site-title {
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .site-title span {
+      color: var(--accent);
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* ── SEARCH BAR ── */
+    .search-wrap {
+      position: relative;
+    }
+    .search-wrap input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.4rem 1rem 0.4rem 2.2rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--text);
+      width: 200px;
+      transition: border-color 0.2s, width 0.3s;
+    }
+    .search-wrap input:focus {
+      outline: none;
+      border-color: var(--accent);
+      width: 260px;
+    }
+    .search-wrap svg {
+      position: absolute;
+      left: 0.65rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover { background: #1f3529; border-color: #1f3529; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border-color: var(--border);
+    }
+    .btn-ghost:hover { background: var(--bg); color: var(--text); }
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      border-color: var(--danger);
+    }
+    .btn-danger:hover { background: var(--danger-lt); }
+    .btn-sm { font-size: 0.78rem; padding: 0.3rem 0.7rem; }
+
+    /* ── LAYOUT ── */
+    .main-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── FILTERS BAR ── */
+    .filters {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-right: 0.25rem;
+    }
+    .filter-select {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.35rem 0.65rem;
+      cursor: pointer;
+    }
+    .filter-select:focus { outline: none; border-color: var(--accent); }
+    .filter-input {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.35rem 0.65rem;
+      width: 140px;
+    }
+    .filter-input:focus { outline: none; border-color: var(--accent); }
+    .filter-reset {
+      font-size: 0.78rem;
+      color: var(--muted);
+      cursor: pointer;
+      text-decoration: underline;
+      background: none;
+      border: none;
+      font-family: var(--font-body);
+    }
+    .filter-reset:hover { color: var(--text); }
+
+    /* ── ARTICLE CARDS ── */
+    .articles-list { display: flex; flex-direction: column; gap: 1px; }
+
+    .article-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: box-shadow 0.2s;
+      animation: fadeUp 0.3s ease both;
+    }
+    .article-card:hover { box-shadow: var(--shadow); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .card-cat {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-lt);
+      padding: 0.15rem 0.55rem;
+      border-radius: 20px;
+    }
+    .card-date {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .card-author {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    .card-author::before { content: '·'; margin-right: 0.4rem; }
+
+    .card-title {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .card-title:hover { color: var(--accent); }
+
+    .card-excerpt {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 0.9rem;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.9rem;
+    }
+    .tag {
+      font-size: 0.72rem;
+      background: var(--tag-bg);
+      color: var(--muted);
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+    }
+    .empty-state svg { margin-bottom: 1rem; opacity: 0.4; }
+    .empty-state h3 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .empty-state p { font-size: 0.88rem; }
+
+    /* ── SIDEBAR ── */
+    .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .panel-head {
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .panel-body { padding: 1.25rem; }
+
+    /* ── FORM ── */
+    .form-group { margin-bottom: 1rem; }
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+    }
+    .form-label span { color: var(--danger); margin-left: 2px; }
+    .form-control {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.55rem 0.75rem;
+      transition: border-color 0.2s;
+    }
+    .form-control:focus { outline: none; border-color: var(--accent); background: #fff; }
+    textarea.form-control { resize: vertical; min-height: 110px; line-height: 1.5; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .form-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+    .form-actions {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      margin-top: 0.5rem;
+    }
+
+    /* ── MODAL (article detail) ── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26,23,20,0.55);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--surface);
+      border-radius: 6px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      overflow-y: auto;
+      transform: translateY(16px);
+      transition: transform 0.25s;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+    }
+    .overlay.open .modal { transform: translateY(0); }
+    .modal-head {
+      padding: 1.5rem 1.75rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .modal-head h2 {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      line-height: 1.3;
+      color: var(--text);
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 0.2rem;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-meta {
+      padding: 0.75rem 1.75rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-body {
+      padding: 1.25rem 1.75rem 1.75rem;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--text);
+      white-space: pre-wrap;
+    }
+    .modal-foot {
+      padding: 1rem 1.75rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    /* ── TOAST ── */
+    .toasts {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 500;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+    .toast {
+      background: var(--text);
+      color: #fff;
+      font-size: 0.85rem;
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      animation: toastIn 0.25s ease both;
+      pointer-events: none;
+    }
+    .toast.success { background: var(--accent); }
+    .toast.error   { background: var(--danger); }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── COUNT BADGE ── */
+    .count-badge {
+      font-size: 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.1rem 0.5rem;
+      border-radius: 20px;
+    }
+
+    /* ── LOADING SKELETON ── */
+    .skeleton {
+      background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: var(--radius);
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .skel-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .skel-line { height: 12px; margin-bottom: 8px; }
+    .skel-title { height: 20px; width: 70%; margin-bottom: 10px; }
+    .skel-text  { height: 10px; margin-bottom: 6px; }
+    .skel-text:last-child { width: 55%; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .main-wrap { grid-template-columns: 1fr; }
+      .sidebar { order: -1; }
+      .form-row { grid-template-columns: 1fr; }
+      .search-wrap input { width: 160px; }
+      .search-wrap input:focus { width: 180px; }
+    }
+    @media (max-width: 560px) {
+      .main-wrap { padding: 1rem; }
+      header { padding: 0 1rem; }
+      .site-title { font-size: 1.05rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ── HEADER ─────────────────────────────────────────────────────────── -->
+<header>
+  <div class="header-inner">
+    <div class="site-title">Le <span>Blog</span></div>
+    <div class="header-actions">
+      <div class="search-wrap">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Rechercher…" autocomplete="off" />
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── MAIN ───────────────────────────────────────────────────────────── -->
+<div class="main-wrap">
+
+  <!-- ARTICLES -->
+  <div>
+
+    <!-- Filters -->
+    <div class="filters">
+      <span class="filter-label">Filtrer</span>
+      <input class="filter-input" id="filterCategorie" placeholder="Catégorie" />
+      <input class="filter-input" id="filterAuteur"    placeholder="Auteur" />
+      <input class="filter-input" id="filterDate" type="date" />
+      <button class="filter-reset" id="resetFilters">Réinitialiser</button>
+    </div>
+
+    <!-- List -->
+    <div id="articlesList" class="articles-list"></div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- Form panel -->
+    <div class="panel">
+      <div class="panel-head">
+        <span id="formTitle">Nouvel article</span>
+        <button class="btn btn-ghost btn-sm" id="cancelEdit" style="display:none">Annuler</button>
+      </div>
+      <div class="panel-body">
+        <input type="hidden" id="editId" />
+
+        <div class="form-group">
+          <label class="form-label" for="fTitre">Titre <span>*</span></label>
+          <input class="form-control" id="fTitre" placeholder="Titre de l'article" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="fContenu">Contenu <span>*</span></label>
+          <textarea class="form-control" id="fContenu" placeholder="Rédigez votre article…"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="fAuteur">Auteur <span>*</span></label>
+            <input class="form-control" id="fAuteur" placeholder="Nom" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fDate">Date</label>
+            <input class="form-control" id="fDate" type="date" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="fCategorie">Catégorie</label>
+            <input class="form-control" id="fCategorie" placeholder="ex: Technologie" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fTags">Tags</label>
+            <input class="form-control" id="fTags" placeholder="tag1, tag2" />
+            <p class="form-hint">Séparés par des virgules</p>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" id="submitBtn">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+            Publier
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats panel -->
+    <div class="panel">
+      <div class="panel-head">Statistiques</div>
+      <div class="panel-body" id="statsPanel">
+        <div style="color:var(--muted);font-size:0.85rem">Chargement…</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── MODAL ───────────────────────────────────────────────────────────── -->
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle"></h2>
+      <button class="modal-close" id="modalClose">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-meta" id="modalMeta"></div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost btn-sm" id="modalClose2">Fermer</button>
+      <button class="btn btn-ghost btn-sm" id="modalEditBtn">Modifier</button>
+      <button class="btn btn-danger btn-sm" id="modalDeleteBtn">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOASTS ──────────────────────────────────────────────────────────── -->
+<div class="toasts" id="toasts"></div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────
+const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://localhost:3000/api'
+  : '/api';  // En production (Railway), même origine
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let allArticles = [];
+let currentArticle = null;
+let searchTimeout = null;
+
+// ── DOM REFS ──────────────────────────────────────────────────────────────
+const $list       = document.getElementById('articlesList');
+const $overlay    = document.getElementById('overlay');
+const $editId     = document.getElementById('editId');
+const $fTitre     = document.getElementById('fTitre');
+const $fContenu   = document.getElementById('fContenu');
+const $fAuteur    = document.getElementById('fAuteur');
+const $fDate      = document.getElementById('fDate');
+const $fCategorie = document.getElementById('fCategorie');
+const $fTags      = document.getElementById('fTags');
+const $submitBtn  = document.getElementById('submitBtn');
+const $cancelEdit = document.getElementById('cancelEdit');
+const $formTitle  = document.getElementById('formTitle');
+const $searchInput = document.getElementById('searchInput');
+
+// ── TOAST ─────────────────────────────────────────────────────────────────
+function toast(msg, type = 'success') {
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(() => el.remove(), 3200);
+}
+
+// ── API HELPERS ───────────────────────────────────────────────────────────
+async function apiFetch(path, options = {}) {
+  try {
+    const res = await fetch(API + path, {
+      headers: { 'Content-Type': 'application/json' },
+      ...options,
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || `Erreur ${res.status}`);
+    return data;
+  } catch (e) {
+    throw e;
+  }
+}
+
+// ── SKELETON ──────────────────────────────────────────────────────────────
+function renderSkeletons(n = 3) {
+  $list.innerHTML = Array.from({ length: n }, () => `
+    <div class="skel-card">
+      <div class="skeleton skel-line" style="width:30%"></div>
+      <div class="skeleton skel-title"></div>
+      <div class="skeleton skel-text"></div>
+      <div class="skeleton skel-text"></div>
+    </div>
+  `).join('');
+}
+
+// ── FORMAT DATE ───────────────────────────────────────────────────────────
+function formatDate(d) {
+  if (!d) return '';
+  const dt = new Date(d);
+  return dt.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+// ── RENDER ARTICLES ───────────────────────────────────────────────────────
+function renderArticles(articles) {
+  if (!articles.length) {
+    $list.innerHTML = `
+      <div class="empty-state">
+        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2Z"/>
+        </svg>
+        <h3>Aucun article trouvé</h3>
+        <p>Rédigez votre premier article dans le formulaire.</p>
+      </div>`;
+    return;
+  }
+
+  $list.innerHTML = articles.map((a, i) => `
+    <div class="article-card" style="animation-delay:${i * 0.04}s">
+      <div class="card-meta">
+        <span class="card-cat">${esc(a.categorie || 'Général')}</span>
+        <span class="card-date">${formatDate(a.date)}</span>
+        <span class="card-author">${esc(a.auteur)}</span>
+      </div>
+      <div class="card-title" data-id="${a.id}">${esc(a.titre)}</div>
+      <div class="card-excerpt">${esc(a.contenu)}</div>
+      ${a.tags && a.tags.length ? `
+        <div class="card-tags">
+          ${a.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}
+        </div>` : ''}
+      <div class="card-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openModal(${a.id})">Lire</button>
+        <button class="btn btn-ghost btn-sm" onclick="startEdit(${a.id})">Modifier</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteArticle(${a.id})">Supprimer</button>
+      </div>
+    </div>
+  `).join('');
+
+  // Click on title → open modal
+  $list.querySelectorAll('.card-title').forEach(el => {
+    el.addEventListener('click', () => openModal(+el.dataset.id));
+  });
+}
+
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+// ── LOAD ARTICLES ─────────────────────────────────────────────────────────
+async function loadArticles(params = {}) {
+  renderSkeletons();
+  try {
+    const qs = new URLSearchParams(Object.fromEntries(
+      Object.entries(params).filter(([,v]) => v)
+    )).toString();
+    const data = await apiFetch('/articles' + (qs ? '?' + qs : ''));
+    allArticles = data.articles;
+    renderArticles(allArticles);
+    renderStats();
+  } catch (e) {
+    $list.innerHTML = `<div class="empty-state">
+      <h3>Impossible de joindre l'API</h3>
+      <p>Vérifiez que le serveur Express est démarré sur le port 3000.</p>
+    </div>`;
+  }
+}
+
+// ── STATS ─────────────────────────────────────────────────────────────────
+function renderStats() {
+  const cats = [...new Set(allArticles.map(a => a.categorie).filter(Boolean))];
+  const auteurs = [...new Set(allArticles.map(a => a.auteur).filter(Boolean))];
+  document.getElementById('statsPanel').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:0.6rem;font-size:0.85rem">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:var(--muted)">Articles</span>
+        <strong>${allArticles.length}</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:var(--muted)">Catégories</span>
+        <strong>${cats.length}</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:var(--muted)">Auteurs</span>
+        <strong>${auteurs.length}</strong>
+      </div>
+      ${cats.length ? `<div style="margin-top:0.4rem;padding-top:0.6rem;border-top:1px solid var(--border)">
+        ${cats.map(c => `<div style="display:flex;justify-content:space-between;margin-bottom:3px">
+          <span style="color:var(--muted);font-size:0.78rem">${esc(c)}</span>
+          <span class="count-badge">${allArticles.filter(a=>a.categorie===c).length}</span>
+        </div>`).join('')}
+      </div>` : ''}
+    </div>`;
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────────
+$searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimeout);
+  const q = $searchInput.value.trim();
+  if (!q) { loadArticles(); return; }
+  searchTimeout = setTimeout(async () => {
+    renderSkeletons();
+    try {
+      const data = await apiFetch('/articles/search?query=' + encodeURIComponent(q));
+      renderArticles(data.articles);
+    } catch(e) { toast(e.message, 'error'); }
+  }, 380);
+});
+
+// ── FILTERS ───────────────────────────────────────────────────────────────
+function applyFilters() {
+  loadArticles({
+    categorie: document.getElementById('filterCategorie').value.trim(),
+    auteur:    document.getElementById('filterAuteur').value.trim(),
+    date:      document.getElementById('filterDate').value,
+  });
+}
+['filterCategorie','filterAuteur','filterDate'].forEach(id => {
+  document.getElementById(id).addEventListener('change', applyFilters);
+  document.getElementById(id).addEventListener('keyup', e => { if(e.key==='Enter') applyFilters(); });
+});
+document.getElementById('resetFilters').addEventListener('click', () => {
+  document.getElementById('filterCategorie').value = '';
+  document.getElementById('filterAuteur').value = '';
+  document.getElementById('filterDate').value = '';
+  $searchInput.value = '';
+  loadArticles();
+});
+
+// ── CREATE / UPDATE ───────────────────────────────────────────────────────
+$submitBtn.addEventListener('click', async () => {
+  const id = $editId.value;
+  const titre    = $fTitre.value.trim();
+  const contenu  = $fContenu.value.trim();
+  const auteur   = $fAuteur.value.trim();
+  const date     = $fDate.value;
+  const categorie= $fCategorie.value.trim();
+  const tags     = $fTags.value.split(',').map(t=>t.trim()).filter(Boolean);
+
+  if (!titre)   { toast('Le titre est obligatoire.', 'error'); $fTitre.focus(); return; }
+  if (!contenu) { toast('Le contenu est obligatoire.', 'error'); $fContenu.focus(); return; }
+  if (!auteur)  { toast("L'auteur est obligatoire.", 'error'); $fAuteur.focus(); return; }
+
+  $submitBtn.disabled = true;
+  $submitBtn.textContent = id ? 'Mise à jour…' : 'Publication…';
+
+  try {
+    if (id) {
+      await apiFetch(`/articles/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ titre, contenu, categorie, tags }),
+      });
+      toast('Article mis à jour.');
+    } else {
+      await apiFetch('/articles', {
+        method: 'POST',
+        body: JSON.stringify({ titre, contenu, auteur, date, categorie, tags }),
+      });
+      toast('Article publié.');
+    }
+    resetForm();
+    loadArticles();
+  } catch(e) {
+    toast(e.message, 'error');
+  } finally {
+    $submitBtn.disabled = false;
+    $submitBtn.innerHTML = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Publier`;
+  }
+});
+
+// ── RESET FORM ────────────────────────────────────────────────────────────
+function resetForm() {
+  $editId.value = '';
+  $fTitre.value = '';
+  $fContenu.value = '';
+  $fAuteur.value = '';
+  $fDate.value = '';
+  $fCategorie.value = '';
+  $fTags.value = '';
+  $formTitle.textContent = 'Nouvel article';
+  $submitBtn.innerHTML = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Publier`;
+  $cancelEdit.style.display = 'none';
+}
+
+$cancelEdit.addEventListener('click', resetForm);
+
+// ── START EDIT ────────────────────────────────────────────────────────────
+function startEdit(id) {
+  const a = allArticles.find(x => x.id === id);
+  if (!a) return;
+  $editId.value     = a.id;
+  $fTitre.value     = a.titre;
+  $fContenu.value   = a.contenu;
+  $fAuteur.value    = a.auteur;
+  $fDate.value      = a.date || '';
+  $fCategorie.value = a.categorie || '';
+  $fTags.value      = (a.tags || []).join(', ');
+  $formTitle.textContent = 'Modifier l\'article';
+  $submitBtn.innerHTML = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Enregistrer`;
+  $cancelEdit.style.display = 'inline-flex';
+  document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' });
+  $fTitre.focus();
+  closeModal();
+}
+
+// ── DELETE ────────────────────────────────────────────────────────────────
+async function deleteArticle(id) {
+  if (!confirm('Supprimer cet article définitivement ?')) return;
+  try {
+    await apiFetch(`/articles/${id}`, { method: 'DELETE' });
+    toast('Article supprimé.');
+    closeModal();
+    loadArticles();
+  } catch(e) {
+    toast(e.message, 'error');
+  }
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────
+async function openModal(id) {
+  try {
+    const data = await apiFetch(`/articles/${id}`);
+    const a = data.article;
+    currentArticle = a;
+    document.getElementById('modalTitle').textContent = a.titre;
+    document.getElementById('modalMeta').innerHTML = `
+      <span class="card-cat">${esc(a.categorie || 'Général')}</span>
+      <span class="card-date">${formatDate(a.date)}</span>
+      <span class="card-author" style="margin-left:0.2rem">par ${esc(a.auteur)}</span>
+      ${(a.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}
+    `;
+    document.getElementById('modalBody').textContent = a.contenu;
+    document.getElementById('modalEditBtn').onclick = () => startEdit(a.id);
+    document.getElementById('modalDeleteBtn').onclick = () => deleteArticle(a.id);
+    $overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  } catch(e) {
+    toast(e.message, 'error');
+  }
+}
+
+function closeModal() {
+  $overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  currentArticle = null;
+}
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalClose2').addEventListener('click', closeModal);
+$overlay.addEventListener('click', e => { if (e.target === $overlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+document.getElementById('fDate').valueAsDate = new Date();
+loadArticles();
+</script>
+</body>
+</html>
