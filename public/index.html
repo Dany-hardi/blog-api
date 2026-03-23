@@ -3,640 +3,243 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog — INF222</title>
+  <title>Blog &mdash; INF222 TAF1</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:        #F7F5F0;
-      --surface:   #FFFFFF;
-      --border:    #E2DDD6;
-      --text:      #1A1714;
-      --muted:     #7A746C;
-      --accent:    #2C4A3E;
-      --accent-lt: #EAF0EE;
-      --danger:    #8B2E2E;
-      --danger-lt: #F5EAEA;
-      --tag-bg:    #EDEDEA;
-      --radius:    4px;
-      --font-body: 'DM Sans', sans-serif;
-      --font-head: 'Lora', serif;
-      --shadow:    0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
-    }
-
-    html { font-size: 16px; }
-
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.6;
-    }
-
-    /* ── HEADER ── */
-    header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 60px;
-    }
-    .site-title {
-      font-family: var(--font-head);
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: -0.02em;
-    }
-    .site-title span {
-      color: var(--accent);
-    }
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    /* ── NAV TABS ── */
-    .nav-tabs { display: flex; align-items: center; gap: 0.25rem; }
-    .nav-tab {
-      font-family: var(--font-body); font-size: 0.83rem; font-weight: 500;
-      color: var(--muted); text-decoration: none;
-      padding: 0.35rem 0.8rem; border-radius: var(--radius);
-      border: 1px solid transparent;
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      transition: all 0.15s; cursor: pointer; background: none;
-    }
-    .nav-tab:hover { background: var(--bg); color: var(--text); border-color: var(--border); }
-    .nav-tab.swagger { background: #f0f7f0; color: #1a7a2e; border-color: #85c98a; }
-    .nav-tab.swagger:hover { background: #1a7a2e; color: #fff; }
-    .nav-tab.github:hover { background: var(--text); color: #fff; border-color: var(--text); }
-    .nav-divider { width: 1px; height: 18px; background: var(--border); margin: 0 0.25rem; }
-    /* ── API INFO ── */
-    .api-url-row {
-      display: flex; align-items: center; gap: 0.4rem;
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 0.4rem 0.6rem; margin-bottom: 0.6rem;
-    }
-    .api-url-label { font-size: 0.7rem; font-weight: 500; color: var(--muted);
-      text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
-    .api-url-value { font-family: monospace; font-size: 0.72rem; color: var(--accent);
-      word-break: break-all; flex: 1; }
-    .copy-btn { background: none; border: none; cursor: pointer; color: var(--muted);
-      padding: 2px; flex-shrink: 0; }
-    .copy-btn:hover { color: var(--accent); }
-
-    /* ── SEARCH BAR ── */
-    .search-wrap {
-      position: relative;
-    }
-    .search-wrap input {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 0.4rem 1rem 0.4rem 2.2rem;
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      color: var(--text);
-      width: 200px;
-      transition: border-color 0.2s, width 0.3s;
-    }
-    .search-wrap input:focus {
-      outline: none;
-      border-color: var(--accent);
-      width: 260px;
-    }
-    .search-wrap svg {
-      position: absolute;
-      left: 0.65rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      pointer-events: none;
-    }
-
-    /* ── BUTTONS ── */
-    .btn {
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      font-weight: 500;
-      padding: 0.45rem 1rem;
-      border-radius: var(--radius);
-      border: 1px solid transparent;
-      cursor: pointer;
-      transition: all 0.15s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      text-decoration: none;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
-    .btn-primary:hover { background: #1f3529; border-color: #1f3529; }
-    .btn-ghost {
-      background: transparent;
-      color: var(--muted);
-      border-color: var(--border);
-    }
-    .btn-ghost:hover { background: var(--bg); color: var(--text); }
-    .btn-danger {
-      background: transparent;
-      color: var(--danger);
-      border-color: var(--danger);
-    }
-    .btn-danger:hover { background: var(--danger-lt); }
-    .btn-sm { font-size: 0.78rem; padding: 0.3rem 0.7rem; }
-
-    /* ── LAYOUT ── */
-    .main-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem;
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 2rem;
-      align-items: start;
-    }
-
-    /* ── FILTERS BAR ── */
-    .filters {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .filter-label {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-right: 0.25rem;
-    }
-    .filter-select {
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      color: var(--text);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.35rem 0.65rem;
-      cursor: pointer;
-    }
-    .filter-select:focus { outline: none; border-color: var(--accent); }
-    .filter-input {
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      color: var(--text);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.35rem 0.65rem;
-      width: 140px;
-    }
-    .filter-input:focus { outline: none; border-color: var(--accent); }
-    .filter-reset {
-      font-size: 0.78rem;
-      color: var(--muted);
-      cursor: pointer;
-      text-decoration: underline;
-      background: none;
-      border: none;
-      font-family: var(--font-body);
-    }
-    .filter-reset:hover { color: var(--text); }
-
-    /* ── ARTICLE CARDS ── */
-    .articles-list { display: flex; flex-direction: column; gap: 1px; }
-
-    .article-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-      transition: box-shadow 0.2s;
-      animation: fadeUp 0.3s ease both;
-    }
-    .article-card:hover { box-shadow: var(--shadow); }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.6rem;
-      flex-wrap: wrap;
-    }
-    .card-cat {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: var(--accent-lt);
-      padding: 0.15rem 0.55rem;
-      border-radius: 20px;
-    }
-    .card-date {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-    .card-author {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-    .card-author::before { content: '·'; margin-right: 0.4rem; }
-
-    .card-title {
-      font-family: var(--font-head);
-      font-size: 1.15rem;
-      font-weight: 600;
-      line-height: 1.35;
-      margin-bottom: 0.5rem;
-      color: var(--text);
-      cursor: pointer;
-    }
-    .card-title:hover { color: var(--accent); }
-
-    .card-excerpt {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.6;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      margin-bottom: 0.9rem;
-    }
-
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin-bottom: 0.9rem;
-    }
-    .tag {
-      font-size: 0.72rem;
-      background: var(--tag-bg);
-      color: var(--muted);
-      padding: 0.15rem 0.5rem;
-      border-radius: var(--radius);
-    }
-
-    .card-actions {
-      display: flex;
-      gap: 0.5rem;
-      padding-top: 0.75rem;
-      border-top: 1px solid var(--border);
-    }
-
-    /* ── EMPTY STATE ── */
-    .empty-state {
-      text-align: center;
-      padding: 4rem 2rem;
-      color: var(--muted);
-      background: var(--surface);
-      border: 1px dashed var(--border);
-      border-radius: var(--radius);
-    }
-    .empty-state svg { margin-bottom: 1rem; opacity: 0.4; }
-    .empty-state h3 {
-      font-family: var(--font-head);
-      font-size: 1.1rem;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-    }
-    .empty-state p { font-size: 0.88rem; }
-
-    /* ── SIDEBAR ── */
-    .sidebar { display: flex; flex-direction: column; gap: 1.25rem; }
-
-    .panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .panel-head {
-      padding: 0.9rem 1.25rem;
-      border-bottom: 1px solid var(--border);
-      font-family: var(--font-head);
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .panel-body { padding: 1.25rem; }
-
-    /* ── FORM ── */
-    .form-group { margin-bottom: 1rem; }
-    .form-label {
-      display: block;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.35rem;
-    }
-    .form-label span { color: var(--danger); margin-left: 2px; }
-    .form-control {
-      width: 100%;
-      font-family: var(--font-body);
-      font-size: 0.88rem;
-      color: var(--text);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.55rem 0.75rem;
-      transition: border-color 0.2s;
-    }
-    .form-control:focus { outline: none; border-color: var(--accent); background: #fff; }
-    textarea.form-control { resize: vertical; min-height: 110px; line-height: 1.5; }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-    }
-
-    .form-hint {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 0.25rem;
-    }
-    .form-actions {
-      display: flex;
-      gap: 0.5rem;
-      justify-content: flex-end;
-      padding-top: 0.75rem;
-      border-top: 1px solid var(--border);
-      margin-top: 0.5rem;
-    }
-
-    /* ── MODAL (article detail) ── */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(26,23,20,0.55);
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s;
-    }
-    .overlay.open { opacity: 1; pointer-events: all; }
-    .modal {
-      background: var(--surface);
-      border-radius: 6px;
-      width: 100%;
-      max-width: 680px;
-      max-height: 85vh;
-      overflow-y: auto;
-      transform: translateY(16px);
-      transition: transform 0.25s;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.2);
-    }
-    .overlay.open .modal { transform: translateY(0); }
-    .modal-head {
-      padding: 1.5rem 1.75rem 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-    .modal-head h2 {
-      font-family: var(--font-head);
-      font-size: 1.5rem;
-      line-height: 1.3;
-      color: var(--text);
-    }
-    .modal-close {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--muted);
-      padding: 0.2rem;
-      flex-shrink: 0;
-      margin-top: 0.2rem;
-    }
-    .modal-close:hover { color: var(--text); }
-    .modal-meta {
-      padding: 0.75rem 1.75rem;
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-      flex-wrap: wrap;
-      border-bottom: 1px solid var(--border);
-    }
-    .modal-body {
-      padding: 1.25rem 1.75rem 1.75rem;
-      font-size: 0.95rem;
-      line-height: 1.75;
-      color: var(--text);
-      white-space: pre-wrap;
-    }
-    .modal-foot {
-      padding: 1rem 1.75rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      gap: 0.5rem;
-      justify-content: flex-end;
-    }
-
-    /* ── TOAST ── */
-    .toasts {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: 500;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      pointer-events: none;
-    }
-    .toast {
-      background: var(--text);
-      color: #fff;
-      font-size: 0.85rem;
-      padding: 0.65rem 1rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      animation: toastIn 0.25s ease both;
-      pointer-events: none;
-    }
-    .toast.success { background: var(--accent); }
-    .toast.error   { background: var(--danger); }
-    @keyframes toastIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── COUNT BADGE ── */
-    .count-badge {
-      font-size: 0.75rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 0.1rem 0.5rem;
-      border-radius: 20px;
-    }
-
-    /* ── LOADING SKELETON ── */
-    .skeleton {
-      background: linear-gradient(90deg, var(--border) 25%, var(--bg) 50%, var(--border) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.4s infinite;
-      border-radius: var(--radius);
-    }
-    @keyframes shimmer {
-      0%   { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-    .skel-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-    }
-    .skel-line { height: 12px; margin-bottom: 8px; }
-    .skel-title { height: 20px; width: 70%; margin-bottom: 10px; }
-    .skel-text  { height: 10px; margin-bottom: 6px; }
-    .skel-text:last-child { width: 55%; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 860px) {
-      .main-wrap { grid-template-columns: 1fr; }
-      .sidebar { order: -1; }
-      .form-row { grid-template-columns: 1fr; }
-      .search-wrap input { width: 160px; }
-      .search-wrap input:focus { width: 180px; }
-    }
-    @media (max-width: 560px) {
-      .main-wrap { padding: 1rem; }
-      header { padding: 0 1rem; }
-      .site-title { font-size: 1.05rem; }
-    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#F7F5F0;--surface:#FFFFFF;--border:#E2DDD6;--text:#1A1714;--muted:#7A746C;--accent:#2C4A3E;--accent-lt:#EAF0EE;--danger:#8B2E2E;--danger-lt:#F5EAEA;--tag-bg:#EDEDEA;--radius:4px;--font-body:'DM Sans',sans-serif;--font-head:'Lora',serif;--shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 16px rgba(0,0,0,0.04)}
+    html{font-size:16px}
+    body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+    /* HEADER */
+    header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;position:sticky;top:0;z-index:100}
+    .header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+    .site-title{font-family:var(--font-head);font-size:1.2rem;font-weight:600;color:var(--text)}
+    .site-title span{color:var(--accent)}
+    .site-sub{font-family:var(--font-body);font-size:0.68rem;color:var(--muted);font-weight:400;margin-left:0.5rem}
+    .header-right{display:flex;align-items:center;gap:0.5rem}
+    /* NAV */
+    .nav-tabs{display:flex;align-items:center;gap:0.2rem}
+    .nav-tab{font-family:var(--font-body);font-size:0.82rem;font-weight:500;color:var(--muted);text-decoration:none;padding:0.32rem 0.75rem;border-radius:var(--radius);border:1px solid transparent;display:inline-flex;align-items:center;gap:0.3rem;transition:all 0.15s;cursor:pointer;background:none;white-space:nowrap}
+    .nav-tab:hover{background:var(--bg);color:var(--text);border-color:var(--border)}
+    .nav-tab.active{background:var(--accent-lt);color:var(--accent);border-color:var(--accent)}
+    .tab-swagger{color:#1a7a2e!important;border-color:#85c98a!important;background:#f0f7f0!important}
+    .tab-swagger:hover{background:#1a7a2e!important;color:#fff!important;border-color:#1a7a2e!important}
+    .tab-github:hover{background:#1a1714!important;color:#fff!important;border-color:#1a1714!important}
+    .vdivider{width:1px;height:18px;background:var(--border)}
+    /* SEARCH */
+    .search-wrap{position:relative}
+    .search-wrap input{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:0.38rem 1rem 0.38rem 2.1rem;font-family:var(--font-body);font-size:0.84rem;color:var(--text);width:180px;transition:border-color 0.2s,width 0.3s}
+    .search-wrap input:focus{outline:none;border-color:var(--accent);width:230px}
+    .search-wrap svg{position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+    /* BUTTONS */
+    .btn{font-family:var(--font-body);font-size:0.85rem;font-weight:500;padding:0.45rem 1rem;border-radius:var(--radius);border:1px solid transparent;cursor:pointer;transition:all 0.15s;display:inline-flex;align-items:center;gap:0.4rem;text-decoration:none}
+    .btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .btn-primary:hover{background:#1f3529;border-color:#1f3529}
+    .btn-ghost{background:transparent;color:var(--muted);border-color:var(--border)}
+    .btn-ghost:hover{background:var(--bg);color:var(--text)}
+    .btn-danger{background:transparent;color:var(--danger);border-color:var(--danger)}
+    .btn-danger:hover{background:var(--danger-lt)}
+    .btn-sm{font-size:0.78rem;padding:0.3rem 0.7rem}
+    /* LAYOUT */
+    .main-wrap{max-width:1100px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start}
+    /* FILTERS */
+    .filters{display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+    .filter-label{font-size:0.78rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+    .filter-input{font-family:var(--font-body);font-size:0.82rem;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:0.35rem 0.65rem;width:130px}
+    .filter-input:focus{outline:none;border-color:var(--accent)}
+    .filter-reset{font-size:0.78rem;color:var(--muted);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:var(--font-body)}
+    .filter-reset:hover{color:var(--text)}
+    /* CARDS */
+    .articles-list{display:flex;flex-direction:column;gap:1px}
+    .article-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;transition:box-shadow 0.2s;animation:fadeUp 0.3s ease both}
+    .article-card:hover{box-shadow:var(--shadow)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .card-meta{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.6rem;flex-wrap:wrap}
+    .card-cat{font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-lt);padding:0.15rem 0.55rem;border-radius:20px}
+    .card-date{font-size:0.78rem;color:var(--muted)}
+    .card-author{font-size:0.78rem;color:var(--muted)}
+    .card-author::before{content:'&middot;';margin-right:0.4rem}
+    .card-title{font-family:var(--font-head);font-size:1.1rem;font-weight:600;line-height:1.35;margin-bottom:0.5rem;color:var(--text);cursor:pointer}
+    .card-title:hover{color:var(--accent)}
+    .card-excerpt{font-size:0.9rem;color:var(--muted);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:0.9rem}
+    .card-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:0.9rem}
+    .tag{font-size:0.72rem;background:var(--tag-bg);color:var(--muted);padding:0.15rem 0.5rem;border-radius:var(--radius)}
+    .card-actions{display:flex;gap:0.5rem;padding-top:0.75rem;border-top:1px solid var(--border)}
+    /* EMPTY */
+    .empty-state{text-align:center;padding:4rem 2rem;color:var(--muted);background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius)}
+    .empty-state h3{font-family:var(--font-head);font-size:1.1rem;color:var(--text);margin-bottom:0.4rem;margin-top:1rem}
+    .empty-state p{font-size:0.88rem}
+    /* SIDEBAR */
+    .sidebar{display:flex;flex-direction:column;gap:1.25rem}
+    .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+    .panel-head{padding:0.9rem 1.25rem;border-bottom:1px solid var(--border);font-family:var(--font-head);font-size:0.95rem;font-weight:600;color:var(--text);display:flex;align-items:center;justify-content:space-between}
+    .panel-body{padding:1.25rem}
+    /* FORM */
+    .form-group{margin-bottom:1rem}
+    .form-label{display:block;font-size:0.78rem;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.35rem}
+    .form-label span{color:var(--danger);margin-left:2px}
+    .form-control{width:100%;font-family:var(--font-body);font-size:0.88rem;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:0.55rem 0.75rem;transition:border-color 0.2s}
+    .form-control:focus{outline:none;border-color:var(--accent);background:#fff}
+    textarea.form-control{resize:vertical;min-height:110px;line-height:1.5}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+    .form-hint{font-size:0.75rem;color:var(--muted);margin-top:0.25rem}
+    .form-actions{display:flex;gap:0.5rem;justify-content:flex-end;padding-top:0.75rem;border-top:1px solid var(--border);margin-top:0.5rem}
+    /* API LINKS */
+    .api-link-row{display:flex;align-items:center;gap:0.4rem;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:0.4rem 0.6rem;margin-bottom:0.5rem}
+    .api-link-label{font-size:0.68rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;min-width:52px}
+    .api-link-url{font-family:monospace;font-size:0.7rem;color:var(--accent);word-break:break-all;flex:1}
+    .copy-btn{background:none;border:none;cursor:pointer;color:var(--muted);padding:2px;flex-shrink:0;transition:color 0.15s}
+    .copy-btn:hover{color:var(--accent)}
+    /* MODAL */
+    .overlay{position:fixed;inset:0;background:rgba(26,23,20,0.55);z-index:200;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity 0.2s}
+    .overlay.open{opacity:1;pointer-events:all}
+    .modal{background:var(--surface);border-radius:6px;width:100%;max-width:680px;max-height:85vh;overflow-y:auto;transform:translateY(16px);transition:transform 0.25s;box-shadow:0 24px 64px rgba(0,0,0,0.2)}
+    .overlay.open .modal{transform:translateY(0)}
+    .modal-head{padding:1.5rem 1.75rem 0;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
+    .modal-head h2{font-family:var(--font-head);font-size:1.5rem;line-height:1.3;color:var(--text)}
+    .modal-close{background:none;border:none;cursor:pointer;color:var(--muted);padding:0.2rem;flex-shrink:0;margin-top:0.2rem}
+    .modal-close:hover{color:var(--text)}
+    .modal-meta{padding:0.75rem 1.75rem;display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+    .modal-body{padding:1.25rem 1.75rem 1.75rem;font-size:0.95rem;line-height:1.75;color:var(--text);white-space:pre-wrap}
+    .modal-foot{padding:1rem 1.75rem;border-top:1px solid var(--border);display:flex;gap:0.5rem;justify-content:flex-end}
+    /* TOAST */
+    .toasts{position:fixed;bottom:1.5rem;right:1.5rem;z-index:500;display:flex;flex-direction:column;gap:0.5rem;pointer-events:none}
+    .toast{background:var(--text);color:#fff;font-size:0.85rem;padding:0.65rem 1rem;border-radius:var(--radius);box-shadow:var(--shadow);animation:toastIn 0.25s ease both}
+    .toast.success{background:var(--accent)}
+    .toast.error{background:var(--danger)}
+    @keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    /* BADGE */
+    .count-badge{font-size:0.75rem;background:var(--bg);border:1px solid var(--border);color:var(--muted);padding:0.1rem 0.5rem;border-radius:20px}
+    /* SKELETONS */
+    .skeleton{background:linear-gradient(90deg,var(--border) 25%,var(--bg) 50%,var(--border) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:var(--radius)}
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .skel-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem}
+    .skel-line{height:12px;margin-bottom:8px}
+    .skel-title{height:20px;width:70%;margin-bottom:10px}
+    .skel-text{height:10px;margin-bottom:6px}
+    .skel-text:last-child{width:55%}
+    /* API DOCS VIEW */
+    #apiDocsView{display:none}
+    .apidocs-wrap{max-width:860px;margin:2.5rem auto;padding:0 2rem}
+    .apidocs-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+    .apidocs-hero{background:#f0f7f0;border-bottom:1px solid #b8ddbf;padding:2rem 2rem 1.5rem;text-align:center}
+    .apidocs-hero h2{font-family:var(--font-head);font-size:1.4rem;color:#1a3d22;margin-bottom:0.4rem}
+    .apidocs-hero p{font-size:0.88rem;color:#2d6a3f;line-height:1.6;margin-bottom:1.25rem}
+    .swagger-btn{display:inline-flex;align-items:center;gap:0.5rem;background:#1a7a2e;color:#fff;padding:0.7rem 1.6rem;border-radius:4px;text-decoration:none;font-size:0.9rem;font-family:var(--font-body);font-weight:500;transition:background 0.15s}
+    .swagger-btn:hover{background:#145a22}
+    .apidocs-endpoints{padding:1.5rem 2rem}
+    .apidocs-endpoints h3{font-size:0.78rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.75rem}
+    .ep-row{display:flex;align-items:center;gap:0.6rem;padding:0.45rem 0.7rem;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:0.4rem;font-size:0.83rem}
+    .ep-method{padding:0.12rem 0.45rem;border-radius:3px;font-size:0.68rem;font-weight:700;font-family:monospace;color:#fff;min-width:38px;text-align:center}
+    .ep-get{background:#49cc90}.ep-post{background:#61affe}.ep-put{background:#fca130}.ep-delete{background:#f93e3e}
+    .ep-path{font-family:monospace;color:var(--text);flex:1}
+    .ep-desc{color:var(--muted);font-size:0.78rem}
+    .apidocs-links{padding:1.25rem 2rem;border-top:1px solid var(--border);display:flex;gap:0.75rem;flex-wrap:wrap}
+    .apidocs-link{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.82rem;color:var(--text);text-decoration:none;padding:0.4rem 0.8rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);transition:all 0.15s}
+    .apidocs-link:hover{background:var(--surface);border-color:var(--accent);color:var(--accent)}
+    .apidocs-info{padding:1rem 2rem;border-top:1px solid var(--border);background:var(--bg);font-size:0.78rem;color:var(--muted);text-align:center}
+    /* RESPONSIVE */
+    @media(max-width:860px){.main-wrap{grid-template-columns:1fr}.sidebar{order:-1}.form-row{grid-template-columns:1fr}.search-wrap input{width:130px}.search-wrap input:focus{width:160px}.site-sub{display:none}}
+    @media(max-width:560px){.main-wrap{padding:1rem}header{padding:0 1rem}}
   </style>
 </head>
-
 <body>
 
-<!-- ── HEADER ─────────────────────────────────────────────────────────── -->
+<!-- HEADER -->
 <header>
   <div class="header-inner">
-    <div class="site-title">Le <span>Blog</span> &nbsp;<small style="font-family:var(--font-body);font-size:0.7rem;font-weight:400;color:var(--muted);letter-spacing:0">INF222 TAF1</small></div>
-    <div class="header-actions">
-      <!-- Nav tabs -->
+    <div class="site-title">Le <span>Blog</span><span class="site-sub">INF222 &middot; TAF1</span></div>
+    <div class="header-right">
       <nav class="nav-tabs">
-        <a class="nav-tab active" id="tabBlog" onclick="showTab('blog');return false;" href="#">
+        <button class="nav-tab active" id="tabBlog" onclick="showView('blog')">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6M7 7h10M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/></svg>
           Blog
-        </a>
-        <a class="nav-tab swagger" id="tabSwagger" onclick="showTab('swagger');return false;" href="#">
+        </button>
+        <button class="nav-tab tab-swagger" id="tabDocs" onclick="showView('docs')">
           <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
           API Docs
-        </a>
-        <div class="nav-divider"></div>
-        <a class="nav-tab github" href="https://github.com/Dany-hardi/blog-api" target="_blank" rel="noopener">
+        </button>
+        <div class="vdivider"></div>
+        <a class="nav-tab tab-github" href="https://github.com/Dany-hardi/blog-api" target="_blank" rel="noopener">
           <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.17c-3.34.72-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.1-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.08 1.84 2.82 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12Z"/></svg>
           GitHub
         </a>
       </nav>
-      <div class="nav-divider"></div>
-      <!-- Search -->
-      <div class="search-wrap">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-        <input type="text" id="searchInput" placeholder="Rechercher…" autocomplete="off" />
+      <div class="vdivider"></div>
+      <div class="search-wrap" id="searchWrap">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="searchInput" placeholder="Rechercher..." autocomplete="off" />
       </div>
     </div>
   </div>
 </header>
 
-<!-- ── SWAGGER VIEW ───────────────────────────────────────────────────────── -->
-<div id="swaggerView" style="display:none;">
-  <div style="max-width:800px;margin:3rem auto;padding:2rem;text-align:center;">
-    <div style="background:#f0f7f0;border:1px solid #85c98a;border-radius:8px;padding:2.5rem 2rem;">
-      <svg width="48" height="48" fill="none" stroke="#1a7a2e" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:1rem">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/>
-        <path d="M14 2v6h6M9 13h6M9 17h4"/>
-      </svg>
-      <h2 style="font-family:'Lora',serif;font-size:1.4rem;color:#1a3d22;margin-bottom:0.5rem">Documentation Swagger UI</h2>
-      <p style="color:#2d6a3f;font-size:0.9rem;margin-bottom:1.5rem;line-height:1.6">
-        L'interface Swagger permet de tester tous les endpoints de l'API directement depuis le navigateur.<br>
-        Elle s'ouvre dans un nouvel onglet pour une meilleure expérience.
-      </p>
-
-      <a id="swaggerOpenBtn" href="/api-docs" target="_blank" rel="noopener"
-         style="display:inline-flex;align-items:center;gap:0.5rem;background:#1a7a2e;color:#fff;
-                padding:0.7rem 1.5rem;border-radius:4px;text-decoration:none;font-size:0.9rem;
-                font-family:'DM Sans',sans-serif;font-weight:500;margin-bottom:2rem">
-        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-        </svg>
-        Ouvrir Swagger UI
-      </a>
-
-      <div style="border-top:1px solid #b8ddbf;padding-top:1.5rem;text-align:left">
-        <p style="font-size:0.8rem;font-weight:600;color:#1a3d22;margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.05em">Endpoints disponibles</p>
-        <div style="display:grid;gap:0.4rem">
-          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
-            <span style="background:#49cc90;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">GET</span>
-            <span style="font-family:monospace;color:#333">/api/articles</span>
-            <span style="color:#666;font-size:0.75rem;margin-left:auto">Lister les articles</span>
+<!-- BLOG VIEW -->
+<div id="blogView">
+  <div class="main-wrap">
+    <div>
+      <div class="filters">
+        <span class="filter-label">Filtrer</span>
+        <input class="filter-input" id="filterCategorie" placeholder="Categorie" />
+        <input class="filter-input" id="filterAuteur" placeholder="Auteur" />
+        <input class="filter-input" id="filterDate" type="date" />
+        <button class="filter-reset" id="resetFilters">Reinitialiser</button>
+      </div>
+      <div id="articlesList" class="articles-list"></div>
+    </div>
+    <div class="sidebar">
+      <!-- Form -->
+      <div class="panel">
+        <div class="panel-head">
+          <span id="formTitle">Nouvel article</span>
+          <button class="btn btn-ghost btn-sm" id="cancelEdit" style="display:none">Annuler</button>
+        </div>
+        <div class="panel-body">
+          <input type="hidden" id="editId" />
+          <div class="form-group"><label class="form-label" for="fTitre">Titre <span>*</span></label><input class="form-control" id="fTitre" placeholder="Titre de l'article" /></div>
+          <div class="form-group"><label class="form-label" for="fContenu">Contenu <span>*</span></label><textarea class="form-control" id="fContenu" placeholder="Redigez votre article..."></textarea></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label" for="fAuteur">Auteur <span>*</span></label><input class="form-control" id="fAuteur" placeholder="Nom" /></div>
+            <div class="form-group"><label class="form-label" for="fDate">Date</label><input class="form-control" id="fDate" type="date" /></div>
           </div>
-          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
-            <span style="background:#61affe;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">POST</span>
-            <span style="font-family:monospace;color:#333">/api/articles</span>
-            <span style="color:#666;font-size:0.75rem;margin-left:auto">Créer un article</span>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label" for="fCategorie">Categorie</label><input class="form-control" id="fCategorie" placeholder="ex: Technologie" /></div>
+            <div class="form-group"><label class="form-label" for="fTags">Tags</label><input class="form-control" id="fTags" placeholder="tag1, tag2" /><p class="form-hint">Separes par virgules</p></div>
           </div>
-          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
-            <span style="background:#49cc90;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">GET</span>
-            <span style="font-family:monospace;color:#333">/api/articles/search</span>
-            <span style="color:#666;font-size:0.75rem;margin-left:auto">Rechercher</span>
+          <div class="form-actions">
+            <button class="btn btn-primary" id="submitBtn">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Publier
+            </button>
           </div>
-          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
-            <span style="background:#49cc90;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">GET</span>
-            <span style="font-family:monospace;color:#333">/api/articles/:id</span>
-            <span style="color:#666;font-size:0.75rem;margin-left:auto">Récupérer par ID</span>
+        </div>
+      </div>
+      <!-- Stats -->
+      <div class="panel">
+        <div class="panel-head">Statistiques</div>
+        <div class="panel-body" id="statsPanel"><div style="color:var(--muted);font-size:0.85rem">Chargement...</div></div>
+      </div>
+      <!-- Links -->
+      <div class="panel">
+        <div class="panel-head">Liens du projet</div>
+        <div class="panel-body">
+          <div style="font-size:0.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.6rem">Endpoints</div>
+          <div class="api-link-row"><span class="api-link-label">API</span><span class="api-link-url" id="urlApi"></span><button class="copy-btn" onclick="copyText('urlApi')" title="Copier"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16V4a2 2 0 0 1 2-2h12"/></svg></button></div>
+          <div class="api-link-row"><span class="api-link-label">Swagger</span><span class="api-link-url" id="urlSwagger"></span><button class="copy-btn" onclick="copyText('urlSwagger')" title="Copier"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16V4a2 2 0 0 1 2-2h12"/></svg></button></div>
+          <div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:0.4rem">
+            <a href="https://github.com/Dany-hardi/blog-api" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:0.4rem;font-size:0.82rem;color:var(--text);text-decoration:none;padding:0.3rem 0">
+              <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.17c-3.34.72-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.1-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.08 1.84 2.82 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12Z"/></svg>
+              Code source (GitHub)
+            </a>
+            <button onclick="showView('docs')" style="display:flex;align-items:center;gap:0.4rem;font-size:0.82rem;color:#1a7a2e;background:none;border:none;cursor:pointer;padding:0.3rem 0;font-family:var(--font-body);text-align:left">
+              <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+              Documentation Swagger
+            </button>
           </div>
-          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
-            <span style="background:#fca130;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">PUT</span>
-            <span style="font-family:monospace;color:#333">/api/articles/:id</span>
-            <span style="color:#666;font-size:0.75rem;margin-left:auto">Modifier</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
-            <span style="background:#f93e3e;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">DEL</span>
-            <span style="font-family:monospace;color:#333">/api/articles/:id</span>
-            <span style="color:#666;font-size:0.75rem;margin-left:auto">Supprimer</span>
+          <div style="margin-top:0.75rem;padding:0.6rem;background:var(--bg);border-radius:var(--radius);font-size:0.74rem;color:var(--muted);line-height:1.6">
+            <strong style="display:block;color:var(--text)">INF222 - EC1 TAF1</strong>
+            Ngankeu Takou Daniel Wilfried &middot; 24G2678
           </div>
         </div>
       </div>
@@ -644,149 +247,53 @@
   </div>
 </div>
 
-<!-- ── MAIN ───────────────────────────────────────────────────────────── -->
-<div id="main-blog">
-<div class="main-wrap">
-
-  <!-- ARTICLES -->
-  <div>
-
-    <!-- Filters -->
-    <div class="filters">
-      <span class="filter-label">Filtrer</span>
-      <input class="filter-input" id="filterCategorie" placeholder="Catégorie" />
-      <input class="filter-input" id="filterAuteur"    placeholder="Auteur" />
-      <input class="filter-input" id="filterDate" type="date" />
-      <button class="filter-reset" id="resetFilters">Réinitialiser</button>
+<!-- API DOCS VIEW -->
+<div id="apiDocsView">
+  <div class="apidocs-wrap">
+    <div class="apidocs-card">
+      <div class="apidocs-hero">
+        <svg width="44" height="44" fill="none" stroke="#1a7a2e" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:0.75rem"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
+        <h2>Documentation API - Blog INF222</h2>
+        <p>Swagger UI permet de tester chaque endpoint directement depuis le navigateur.<br>Cliquez sur le bouton ci-dessous pour l'ouvrir dans un nouvel onglet.</p>
+        <a id="swaggerOpenBtn" href="/api-docs" target="_blank" rel="noopener" class="swagger-btn">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Ouvrir Swagger UI
+        </a>
+      </div>
+      <div class="apidocs-endpoints">
+        <h3>Endpoints disponibles</h3>
+        <div class="ep-row"><span class="ep-method ep-post">POST</span><span class="ep-path">/api/articles</span><span class="ep-desc">Creer un article</span></div>
+        <div class="ep-row"><span class="ep-method ep-get">GET</span><span class="ep-path">/api/articles</span><span class="ep-desc">Lister les articles (filtres : categorie, auteur, date)</span></div>
+        <div class="ep-row"><span class="ep-method ep-get">GET</span><span class="ep-path">/api/articles/search?query=</span><span class="ep-desc">Recherche plein-texte</span></div>
+        <div class="ep-row"><span class="ep-method ep-get">GET</span><span class="ep-path">/api/articles/:id</span><span class="ep-desc">Recuperer un article par ID</span></div>
+        <div class="ep-row"><span class="ep-method ep-put">PUT</span><span class="ep-path">/api/articles/:id</span><span class="ep-desc">Modifier un article</span></div>
+        <div class="ep-row"><span class="ep-method ep-delete">DEL</span><span class="ep-path">/api/articles/:id</span><span class="ep-desc">Supprimer un article</span></div>
+      </div>
+      <div class="apidocs-links">
+        <a id="linkApi" href="#" target="_blank" rel="noopener" class="apidocs-link">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          API JSON
+        </a>
+        <a id="linkSwagger" href="#" target="_blank" rel="noopener" class="apidocs-link">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/></svg>
+          Swagger UI
+        </a>
+        <a href="https://github.com/Dany-hardi/blog-api" target="_blank" rel="noopener" class="apidocs-link">
+          <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.17c-3.34.72-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.1-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.08 1.84 2.82 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12Z"/></svg>
+          GitHub
+        </a>
+      </div>
+      <div class="apidocs-info">INF222 - EC1 &middot; TAF1 &middot; Ngankeu Takou Daniel Wilfried &middot; Matricule 24G2678</div>
     </div>
-
-    <!-- List -->
-    <div id="articlesList" class="articles-list"></div>
-  </div>
-
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-
-    <!-- Form panel -->
-    <div class="panel">
-      <div class="panel-head">
-        <span id="formTitle">Nouvel article</span>
-        <button class="btn btn-ghost btn-sm" id="cancelEdit" style="display:none">Annuler</button>
-      </div>
-      <div class="panel-body">
-        <input type="hidden" id="editId" />
-
-        <div class="form-group">
-          <label class="form-label" for="fTitre">Titre <span>*</span></label>
-          <input class="form-control" id="fTitre" placeholder="Titre de l'article" />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="fContenu">Contenu <span>*</span></label>
-          <textarea class="form-control" id="fContenu" placeholder="Rédigez votre article…"></textarea>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="fAuteur">Auteur <span>*</span></label>
-            <input class="form-control" id="fAuteur" placeholder="Nom" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="fDate">Date</label>
-            <input class="form-control" id="fDate" type="date" />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="fCategorie">Catégorie</label>
-            <input class="form-control" id="fCategorie" placeholder="ex: Technologie" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="fTags">Tags</label>
-            <input class="form-control" id="fTags" placeholder="tag1, tag2" />
-            <p class="form-hint">Séparés par des virgules</p>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button class="btn btn-primary" id="submitBtn">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-            Publier
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Stats panel -->
-    <div class="panel">
-      <div class="panel-head">Statistiques</div>
-      <div class="panel-body" id="statsPanel">
-        <div style="color:var(--muted);font-size:0.85rem">Chargement…</div>
-      </div>
-    </div>
-
-    <!-- API Info panel -->
-    <div class="panel">
-      <div class="panel-head">
-        <span>Liens du projet</span>
-      </div>
-      <div class="panel-body">
-        <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Endpoints</div>
-
-        <div class="api-url-row">
-          <span class="api-url-label">API</span>
-          <span class="api-url-value" id="apiBaseUrl">/api/articles</span>
-          <button class="copy-btn" onclick="copyUrl('apiBaseUrl')" title="Copier">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16V4a2 2 0 0 1 2-2h12"/></svg>
-          </button>
-        </div>
-
-        <div class="api-url-row">
-          <span class="api-url-label">Swagger</span>
-          <span class="api-url-value" id="swaggerUrl">/api-docs</span>
-          <button class="copy-btn" onclick="copyUrl('swaggerUrl')" title="Copier">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16V4a2 2 0 0 1 2-2h12"/></svg>
-          </button>
-        </div>
-
-        <div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border)">
-          <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.5rem;font-weight:500;text-transform:uppercase;letter-spacing:0.05em">Ressources</div>
-          <a href="https://github.com/Dany-hardi/blog-api" target="_blank" rel="noopener"
-             style="display:flex;align-items:center;gap:0.4rem;font-size:0.82rem;color:var(--text);text-decoration:none;padding:0.35rem 0;border-bottom:1px solid var(--border)">
-            <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.17c-3.34.72-4.04-1.6-4.04-1.6-.55-1.38-1.34-1.75-1.34-1.75-1.1-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.08 1.84 2.82 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12Z"/></svg>
-            Code source (GitHub)
-          </a>
-          <button onclick="showTab('swagger')"
-            style="display:flex;align-items:center;gap:0.4rem;font-size:0.82rem;color:#1a7a2e;background:none;border:none;cursor:pointer;padding:0.35rem 0;width:100%;text-align:left;font-family:var(--font-body)">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
-            Documentation Swagger
-          </button>
-        </div>
-
-        <div style="margin-top:0.75rem;padding:0.6rem;background:var(--bg);border-radius:var(--radius);font-size:0.75rem;color:var(--muted);line-height:1.5">
-          <strong style="display:block;margin-bottom:0.2rem">INF222 — EC1 TAF1</strong>
-          Ngankeu Takou Daniel Wilfried<br>
-          Matricule : 24G2678
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
 
-<!-- ── MODAL ───────────────────────────────────────────────────────────── -->
+<!-- MODAL -->
 <div class="overlay" id="overlay">
-  <div class="modal" id="modal">
+  <div class="modal">
     <div class="modal-head">
       <h2 id="modalTitle"></h2>
-      <button class="modal-close" id="modalClose">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M18 6 6 18M6 6l12 12"/>
-        </svg>
-      </button>
+      <button class="modal-close" id="modalClose"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
     <div class="modal-meta" id="modalMeta"></div>
     <div class="modal-body" id="modalBody"></div>
@@ -798,334 +305,186 @@
   </div>
 </div>
 
-</div><!-- end main-blog -->
-
-<!-- ── TOASTS ──────────────────────────────────────────────────────────── -->
+<!-- TOASTS -->
 <div class="toasts" id="toasts"></div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────────────────────
-const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ? 'http://localhost:3000/api'
-  : '/api';  // En production (Railway), même origine
+const API = window.location.origin + '/api';
+let allArticles = [], currentArticle = null, searchTimeout = null;
 
-// ── STATE ─────────────────────────────────────────────────────────────────
-let allArticles = [];
-let currentArticle = null;
-let searchTimeout = null;
+const $list=$o('articlesList'),$overlay=$o('overlay'),$editId=$o('editId');
+const $fTitre=$o('fTitre'),$fContenu=$o('fContenu'),$fAuteur=$o('fAuteur');
+const $fDate=$o('fDate'),$fCategorie=$o('fCategorie'),$fTags=$o('fTags');
+const $submitBtn=$o('submitBtn'),$cancelEdit=$o('cancelEdit'),$formTitle=$o('formTitle');
+const $searchInput=$o('searchInput');
+function $o(id){return document.getElementById(id)}
 
-// ── DOM REFS ──────────────────────────────────────────────────────────────
-const $list       = document.getElementById('articlesList');
-const $overlay    = document.getElementById('overlay');
-const $editId     = document.getElementById('editId');
-const $fTitre     = document.getElementById('fTitre');
-const $fContenu   = document.getElementById('fContenu');
-const $fAuteur    = document.getElementById('fAuteur');
-const $fDate      = document.getElementById('fDate');
-const $fCategorie = document.getElementById('fCategorie');
-const $fTags      = document.getElementById('fTags');
-const $submitBtn  = document.getElementById('submitBtn');
-const $cancelEdit = document.getElementById('cancelEdit');
-const $formTitle  = document.getElementById('formTitle');
-const $searchInput = document.getElementById('searchInput');
-
-// ── TOAST ─────────────────────────────────────────────────────────────────
-function toast(msg, type = 'success') {
-  const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  el.textContent = msg;
-  document.getElementById('toasts').appendChild(el);
-  setTimeout(() => el.remove(), 3200);
-}
-
-// ── API HELPERS ───────────────────────────────────────────────────────────
-async function apiFetch(path, options = {}) {
-  try {
-    const res = await fetch(API + path, {
-      headers: { 'Content-Type': 'application/json' },
-      ...options,
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || `Erreur ${res.status}`);
-    return data;
-  } catch (e) {
-    throw e;
+function showView(view){
+  const blog=$o('blogView'),docs=$o('apiDocsView'),tB=$o('tabBlog'),tD=$o('tabDocs'),sw=$o('searchWrap');
+  const base=window.location.origin;
+  if(view==='docs'){
+    blog.style.display='none';docs.style.display='';
+    tB.classList.remove('active');tD.classList.add('active');sw.style.display='none';
+    $o('swaggerOpenBtn').href=base+'/api-docs';
+    $o('linkApi').href=base+'/api/articles';
+    $o('linkSwagger').href=base+'/api-docs';
+  }else{
+    blog.style.display='';docs.style.display='none';
+    tB.classList.add('active');tD.classList.remove('active');sw.style.display='';
   }
 }
 
-// ── SKELETON ──────────────────────────────────────────────────────────────
-function renderSkeletons(n = 3) {
-  $list.innerHTML = Array.from({ length: n }, () => `
-    <div class="skel-card">
-      <div class="skeleton skel-line" style="width:30%"></div>
-      <div class="skeleton skel-title"></div>
-      <div class="skeleton skel-text"></div>
-      <div class="skeleton skel-text"></div>
-    </div>
-  `).join('');
+function toast(msg,type='success'){
+  const el=document.createElement('div');
+  el.className='toast '+type;el.textContent=msg;
+  $o('toasts').appendChild(el);setTimeout(()=>el.remove(),3200);
 }
 
-// ── FORMAT DATE ───────────────────────────────────────────────────────────
-function formatDate(d) {
-  if (!d) return '';
-  const dt = new Date(d);
-  return dt.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+function copyText(id){
+  navigator.clipboard.writeText($o(id).textContent).then(()=>toast('Lien copie !'));
 }
 
-// ── RENDER ARTICLES ───────────────────────────────────────────────────────
-function renderArticles(articles) {
-  if (!articles.length) {
-    $list.innerHTML = `
-      <div class="empty-state">
-        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2Z"/>
-        </svg>
-        <h3>Aucun article trouvé</h3>
-        <p>Rédigez votre premier article dans le formulaire.</p>
-      </div>`;
+async function apiFetch(path,options={}){
+  const res=await fetch(API+path,{headers:{'Content-Type':'application/json'},...options});
+  const data=await res.json();
+  if(!res.ok)throw new Error(data.error||'Erreur '+res.status);
+  return data;
+}
+
+function renderSkeletons(n=3){
+  $list.innerHTML=Array.from({length:n},()=>'<div class="skel-card"><div class="skeleton skel-line" style="width:30%"></div><div class="skeleton skel-title"></div><div class="skeleton skel-text"></div><div class="skeleton skel-text"></div></div>').join('');
+}
+
+function formatDate(d){
+  if(!d)return'';
+  return new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+}
+
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function renderArticles(articles){
+  if(!articles.length){
+    $list.innerHTML='<div class="empty-state"><svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2Z"/></svg><h3>Aucun article</h3><p>Redigez votre premier article.</p></div>';
     return;
   }
-
-  $list.innerHTML = articles.map((a, i) => `
-    <div class="article-card" style="animation-delay:${i * 0.04}s">
-      <div class="card-meta">
-        <span class="card-cat">${esc(a.categorie || 'Général')}</span>
-        <span class="card-date">${formatDate(a.date)}</span>
-        <span class="card-author">${esc(a.auteur)}</span>
-      </div>
-      <div class="card-title" data-id="${a.id}">${esc(a.titre)}</div>
-      <div class="card-excerpt">${esc(a.contenu)}</div>
-      ${a.tags && a.tags.length ? `
-        <div class="card-tags">
-          ${a.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}
-        </div>` : ''}
-      <div class="card-actions">
-        <button class="btn btn-ghost btn-sm" onclick="openModal(${a.id})">Lire</button>
-        <button class="btn btn-ghost btn-sm" onclick="startEdit(${a.id})">Modifier</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteArticle(${a.id})">Supprimer</button>
-      </div>
+  $list.innerHTML=articles.map((a,i)=>`<div class="article-card" style="animation-delay:${i*.04}s">
+    <div class="card-meta"><span class="card-cat">${esc(a.categorie||'General')}</span><span class="card-date">${formatDate(a.date)}</span><span class="card-author">${esc(a.auteur)}</span></div>
+    <div class="card-title" data-id="${a.id}">${esc(a.titre)}</div>
+    <div class="card-excerpt">${esc(a.contenu)}</div>
+    ${a.tags&&a.tags.length?'<div class="card-tags">'+a.tags.map(t=>'<span class="tag">'+esc(t)+'</span>').join('')+'</div>':''}
+    <div class="card-actions">
+      <button class="btn btn-ghost btn-sm" onclick="openModal(${a.id})">Lire</button>
+      <button class="btn btn-ghost btn-sm" onclick="startEdit(${a.id})">Modifier</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteArticle(${a.id})">Supprimer</button>
     </div>
-  `).join('');
-
-  // Click on title → open modal
-  $list.querySelectorAll('.card-title').forEach(el => {
-    el.addEventListener('click', () => openModal(+el.dataset.id));
-  });
+  </div>`).join('');
+  $list.querySelectorAll('.card-title').forEach(el=>el.addEventListener('click',()=>openModal(+el.dataset.id)));
 }
 
-function esc(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;');
-}
-
-// ── LOAD ARTICLES ─────────────────────────────────────────────────────────
-async function loadArticles(params = {}) {
+async function loadArticles(params={}){
   renderSkeletons();
-  try {
-    const qs = new URLSearchParams(Object.fromEntries(
-      Object.entries(params).filter(([,v]) => v)
-    )).toString();
-    const data = await apiFetch('/articles' + (qs ? '?' + qs : ''));
-    allArticles = data.articles;
-    renderArticles(allArticles);
-    renderStats();
-  } catch (e) {
-    $list.innerHTML = `<div class="empty-state">
-      <h3>Impossible de joindre l'API</h3>
-      <p>Vérifiez que le serveur Express est démarré sur le port 3000.</p>
-    </div>`;
+  try{
+    const qs=new URLSearchParams(Object.fromEntries(Object.entries(params).filter(([,v])=>v))).toString();
+    const data=await apiFetch('/articles'+(qs?'?'+qs:''));
+    allArticles=data.articles;renderArticles(allArticles);renderStats();
+  }catch(e){
+    $list.innerHTML='<div class="empty-state"><h3>Impossible de joindre l\'API</h3><p>Verifiez que le serveur Express est demarre.</p></div>';
   }
 }
 
-// ── STATS ─────────────────────────────────────────────────────────────────
-function renderStats() {
-  const cats = [...new Set(allArticles.map(a => a.categorie).filter(Boolean))];
-  const auteurs = [...new Set(allArticles.map(a => a.auteur).filter(Boolean))];
-  document.getElementById('statsPanel').innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:0.6rem;font-size:0.85rem">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:var(--muted)">Articles</span>
-        <strong>${allArticles.length}</strong>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:var(--muted)">Catégories</span>
-        <strong>${cats.length}</strong>
-      </div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:var(--muted)">Auteurs</span>
-        <strong>${auteurs.length}</strong>
-      </div>
-      ${cats.length ? `<div style="margin-top:0.4rem;padding-top:0.6rem;border-top:1px solid var(--border)">
-        ${cats.map(c => `<div style="display:flex;justify-content:space-between;margin-bottom:3px">
-          <span style="color:var(--muted);font-size:0.78rem">${esc(c)}</span>
-          <span class="count-badge">${allArticles.filter(a=>a.categorie===c).length}</span>
-        </div>`).join('')}
-      </div>` : ''}
-    </div>`;
+function renderStats(){
+  const cats=[...new Set(allArticles.map(a=>a.categorie).filter(Boolean))];
+  const auteurs=[...new Set(allArticles.map(a=>a.auteur).filter(Boolean))];
+  $o('statsPanel').innerHTML=`<div style="display:flex;flex-direction:column;gap:0.6rem;font-size:0.85rem">
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Articles</span><strong>${allArticles.length}</strong></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Categories</span><strong>${cats.length}</strong></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Auteurs</span><strong>${auteurs.length}</strong></div>
+    ${cats.length?'<div style="margin-top:0.4rem;padding-top:0.6rem;border-top:1px solid var(--border)">'+cats.map(c=>'<div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="color:var(--muted);font-size:0.78rem">'+esc(c)+'</span><span class="count-badge">'+allArticles.filter(a=>a.categorie===c).length+'</span></div>').join('')+'</div>':''}
+  </div>`;
 }
 
-// ── SEARCH ────────────────────────────────────────────────────────────────
-$searchInput.addEventListener('input', () => {
-  clearTimeout(searchTimeout);
-  const q = $searchInput.value.trim();
-  if (!q) { loadArticles(); return; }
-  searchTimeout = setTimeout(async () => {
-    renderSkeletons();
-    try {
-      const data = await apiFetch('/articles/search?query=' + encodeURIComponent(q));
-      renderArticles(data.articles);
-    } catch(e) { toast(e.message, 'error'); }
-  }, 380);
+$searchInput.addEventListener('input',()=>{
+  clearTimeout(searchTimeout);const q=$searchInput.value.trim();
+  if(!q){loadArticles();return;}
+  searchTimeout=setTimeout(async()=>{renderSkeletons();try{const data=await apiFetch('/articles/search?query='+encodeURIComponent(q));renderArticles(data.articles);}catch(e){toast(e.message,'error');}},380);
 });
 
-// ── FILTERS ───────────────────────────────────────────────────────────────
-function applyFilters() {
-  loadArticles({
-    categorie: document.getElementById('filterCategorie').value.trim(),
-    auteur:    document.getElementById('filterAuteur').value.trim(),
-    date:      document.getElementById('filterDate').value,
-  });
-}
-['filterCategorie','filterAuteur','filterDate'].forEach(id => {
-  document.getElementById(id).addEventListener('change', applyFilters);
-  document.getElementById(id).addEventListener('keyup', e => { if(e.key==='Enter') applyFilters(); });
+function applyFilters(){loadArticles({categorie:$o('filterCategorie').value.trim(),auteur:$o('filterAuteur').value.trim(),date:$o('filterDate').value});}
+['filterCategorie','filterAuteur','filterDate'].forEach(id=>{
+  $o(id).addEventListener('change',applyFilters);
+  $o(id).addEventListener('keyup',e=>{if(e.key==='Enter')applyFilters();});
 });
-document.getElementById('resetFilters').addEventListener('click', () => {
-  document.getElementById('filterCategorie').value = '';
-  document.getElementById('filterAuteur').value = '';
-  document.getElementById('filterDate').value = '';
-  $searchInput.value = '';
+$o('resetFilters').addEventListener('click',()=>{
+  $o('filterCategorie').value='';$o('filterAuteur').value='';$o('filterDate').value='';$searchInput.value='';loadArticles();
+});
+
+$submitBtn.addEventListener('click',async()=>{
+  const id=$editId.value,titre=$fTitre.value.trim(),contenu=$fContenu.value.trim(),auteur=$fAuteur.value.trim();
+  const date=$fDate.value,categorie=$fCategorie.value.trim(),tags=$fTags.value.split(',').map(t=>t.trim()).filter(Boolean);
+  if(!titre){toast('Titre obligatoire','error');$fTitre.focus();return;}
+  if(!contenu){toast('Contenu obligatoire','error');$fContenu.focus();return;}
+  if(!auteur){toast('Auteur obligatoire','error');$fAuteur.focus();return;}
+  $submitBtn.disabled=true;$submitBtn.textContent=id?'Mise a jour...':'Publication...';
+  try{
+    if(id){await apiFetch('/articles/'+id,{method:'PUT',body:JSON.stringify({titre,contenu,categorie,tags})});toast('Article mis a jour.');}
+    else{await apiFetch('/articles',{method:'POST',body:JSON.stringify({titre,contenu,auteur,date,categorie,tags})});toast('Article publie.');}
+    resetForm();loadArticles();
+  }catch(e){toast(e.message,'error');}
+  finally{$submitBtn.disabled=false;$submitBtn.innerHTML='<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Publier';}
+});
+
+function resetForm(){
+  $editId.value='';$fTitre.value='';$fContenu.value='';$fAuteur.value='';$fDate.value='';$fCategorie.value='';$fTags.value='';
+  $formTitle.textContent='Nouvel article';
+  $submitBtn.innerHTML='<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Publier';
+  $cancelEdit.style.display='none';
+}
+$cancelEdit.addEventListener('click',resetForm);
+
+function startEdit(id){
+  const a=allArticles.find(x=>x.id===id);if(!a)return;
+  $editId.value=a.id;$fTitre.value=a.titre;$fContenu.value=a.contenu;$fAuteur.value=a.auteur;
+  $fDate.value=a.date||'';$fCategorie.value=a.categorie||'';$fTags.value=(a.tags||[]).join(', ');
+  $formTitle.textContent="Modifier l'article";
+  $submitBtn.innerHTML='<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Enregistrer';
+  $cancelEdit.style.display='inline-flex';
+  showView('blog');
+  document.querySelector('.sidebar').scrollIntoView({behavior:'smooth'});
+  $fTitre.focus();closeModal();
+}
+
+async function deleteArticle(id){
+  if(!confirm('Supprimer cet article ?'))return;
+  try{await apiFetch('/articles/'+id,{method:'DELETE'});toast('Article supprime.');closeModal();loadArticles();}
+  catch(e){toast(e.message,'error');}
+}
+
+async function openModal(id){
+  try{
+    const data=await apiFetch('/articles/'+id);const a=data.article;currentArticle=a;
+    $o('modalTitle').textContent=a.titre;
+    $o('modalMeta').innerHTML='<span class="card-cat">'+esc(a.categorie||'General')+'</span><span class="card-date">'+formatDate(a.date)+'</span><span class="card-author" style="margin-left:0.2rem">par '+esc(a.auteur)+'</span>'+(a.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join('');
+    $o('modalBody').textContent=a.contenu;
+    $o('modalEditBtn').onclick=()=>startEdit(a.id);
+    $o('modalDeleteBtn').onclick=()=>deleteArticle(a.id);
+    $overlay.classList.add('open');document.body.style.overflow='hidden';
+  }catch(e){toast(e.message,'error');}
+}
+
+function closeModal(){$overlay.classList.remove('open');document.body.style.overflow='';currentArticle=null;}
+$o('modalClose').addEventListener('click',closeModal);
+$o('modalClose2').addEventListener('click',closeModal);
+$overlay.addEventListener('click',e=>{if(e.target===$overlay)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// INIT
+(function(){
+  const base=window.location.origin;
+  $o('urlApi').textContent=base+'/api/articles';
+  $o('urlSwagger').textContent=base+'/api-docs';
+  $o('fDate').valueAsDate=new Date();
   loadArticles();
-});
-
-// ── CREATE / UPDATE ───────────────────────────────────────────────────────
-$submitBtn.addEventListener('click', async () => {
-  const id = $editId.value;
-  const titre    = $fTitre.value.trim();
-  const contenu  = $fContenu.value.trim();
-  const auteur   = $fAuteur.value.trim();
-  const date     = $fDate.value;
-  const categorie= $fCategorie.value.trim();
-  const tags     = $fTags.value.split(',').map(t=>t.trim()).filter(Boolean);
-
-  if (!titre)   { toast('Le titre est obligatoire.', 'error'); $fTitre.focus(); return; }
-  if (!contenu) { toast('Le contenu est obligatoire.', 'error'); $fContenu.focus(); return; }
-  if (!auteur)  { toast("L'auteur est obligatoire.", 'error'); $fAuteur.focus(); return; }
-
-  $submitBtn.disabled = true;
-  $submitBtn.textContent = id ? 'Mise à jour…' : 'Publication…';
-
-  try {
-    if (id) {
-      await apiFetch(`/articles/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({ titre, contenu, categorie, tags }),
-      });
-      toast('Article mis à jour.');
-    } else {
-      await apiFetch('/articles', {
-        method: 'POST',
-        body: JSON.stringify({ titre, contenu, auteur, date, categorie, tags }),
-      });
-      toast('Article publié.');
-    }
-    resetForm();
-    loadArticles();
-  } catch(e) {
-    toast(e.message, 'error');
-  } finally {
-    $submitBtn.disabled = false;
-    $submitBtn.innerHTML = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Publier`;
-  }
-});
-
-// ── RESET FORM ────────────────────────────────────────────────────────────
-function resetForm() {
-  $editId.value = '';
-  $fTitre.value = '';
-  $fContenu.value = '';
-  $fAuteur.value = '';
-  $fDate.value = '';
-  $fCategorie.value = '';
-  $fTags.value = '';
-  $formTitle.textContent = 'Nouvel article';
-  $submitBtn.innerHTML = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Publier`;
-  $cancelEdit.style.display = 'none';
-}
-
-$cancelEdit.addEventListener('click', resetForm);
-
-// ── START EDIT ────────────────────────────────────────────────────────────
-function startEdit(id) {
-  const a = allArticles.find(x => x.id === id);
-  if (!a) return;
-  $editId.value     = a.id;
-  $fTitre.value     = a.titre;
-  $fContenu.value   = a.contenu;
-  $fAuteur.value    = a.auteur;
-  $fDate.value      = a.date || '';
-  $fCategorie.value = a.categorie || '';
-  $fTags.value      = (a.tags || []).join(', ');
-  $formTitle.textContent = 'Modifier l\'article';
-  $submitBtn.innerHTML = `<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Enregistrer`;
-  $cancelEdit.style.display = 'inline-flex';
-  document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' });
-  $fTitre.focus();
-  closeModal();
-}
-
-// ── DELETE ────────────────────────────────────────────────────────────────
-async function deleteArticle(id) {
-  if (!confirm('Supprimer cet article définitivement ?')) return;
-  try {
-    await apiFetch(`/articles/${id}`, { method: 'DELETE' });
-    toast('Article supprimé.');
-    closeModal();
-    loadArticles();
-  } catch(e) {
-    toast(e.message, 'error');
-  }
-}
-
-// ── MODAL ─────────────────────────────────────────────────────────────────
-async function openModal(id) {
-  try {
-    const data = await apiFetch(`/articles/${id}`);
-    const a = data.article;
-    currentArticle = a;
-    document.getElementById('modalTitle').textContent = a.titre;
-    document.getElementById('modalMeta').innerHTML = `
-      <span class="card-cat">${esc(a.categorie || 'Général')}</span>
-      <span class="card-date">${formatDate(a.date)}</span>
-      <span class="card-author" style="margin-left:0.2rem">par ${esc(a.auteur)}</span>
-      ${(a.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}
-    `;
-    document.getElementById('modalBody').textContent = a.contenu;
-    document.getElementById('modalEditBtn').onclick = () => startEdit(a.id);
-    document.getElementById('modalDeleteBtn').onclick = () => deleteArticle(a.id);
-    $overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  } catch(e) {
-    toast(e.message, 'error');
-  }
-}
-
-function closeModal() {
-  $overlay.classList.remove('open');
-  document.body.style.overflow = '';
-  currentArticle = null;
-}
-
-document.getElementById('modalClose').addEventListener('click', closeModal);
-document.getElementById('modalClose2').addEventListener('click', closeModal);
-$overlay.addEventListener('click', e => { if (e.target === $overlay) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-// ── INIT ──────────────────────────────────────────────────────────────────
-document.getElementById('fDate').valueAsDate = new Date();
-loadArticles();
+})();
 </script>
 </body>
 </html>
