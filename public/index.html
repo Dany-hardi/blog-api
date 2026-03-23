@@ -323,13 +323,13 @@ function showView(view){
   const blog=$o('blogView'),docs=$o('apiDocsView'),tB=$o('tabBlog'),tD=$o('tabDocs'),sw=$o('searchWrap');
   const base=window.location.origin;
   if(view==='docs'){
-    blog.style.display='none';docs.style.display='';
+    blog.style.display='none';docs.style.display='block';
     tB.classList.remove('active');tD.classList.add('active');sw.style.display='none';
     $o('swaggerOpenBtn').href=base+'/api-docs';
     $o('linkApi').href=base+'/api/articles';
     $o('linkSwagger').href=base+'/api-docs';
   }else{
-    blog.style.display='';docs.style.display='none';
+    blog.style.display='block';docs.style.display='none';
     tB.classList.add('active');tD.classList.remove('active');sw.style.display='';
   }
 }
