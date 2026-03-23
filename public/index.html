@@ -580,9 +580,68 @@
   </div>
 </header>
 
-<!-- ── SWAGGER FRAME ──────────────────────────────────────────────────────── -->
-<div id="swaggerView" style="display:none; height:calc(100vh - 60px);">
-  <iframe id="swaggerFrame" src="" style="width:100%;height:100%;border:none;" title="Swagger UI"></iframe>
+<!-- ── SWAGGER VIEW ───────────────────────────────────────────────────────── -->
+<div id="swaggerView" style="display:none;">
+  <div style="max-width:800px;margin:3rem auto;padding:2rem;text-align:center;">
+    <div style="background:#f0f7f0;border:1px solid #85c98a;border-radius:8px;padding:2.5rem 2rem;">
+      <svg width="48" height="48" fill="none" stroke="#1a7a2e" stroke-width="1.5" viewBox="0 0 24 24" style="margin-bottom:1rem">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/>
+        <path d="M14 2v6h6M9 13h6M9 17h4"/>
+      </svg>
+      <h2 style="font-family:'Lora',serif;font-size:1.4rem;color:#1a3d22;margin-bottom:0.5rem">Documentation Swagger UI</h2>
+      <p style="color:#2d6a3f;font-size:0.9rem;margin-bottom:1.5rem;line-height:1.6">
+        L'interface Swagger permet de tester tous les endpoints de l'API directement depuis le navigateur.<br>
+        Elle s'ouvre dans un nouvel onglet pour une meilleure expérience.
+      </p>
+
+      <a id="swaggerOpenBtn" href="/api-docs" target="_blank" rel="noopener"
+         style="display:inline-flex;align-items:center;gap:0.5rem;background:#1a7a2e;color:#fff;
+                padding:0.7rem 1.5rem;border-radius:4px;text-decoration:none;font-size:0.9rem;
+                font-family:'DM Sans',sans-serif;font-weight:500;margin-bottom:2rem">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Ouvrir Swagger UI
+      </a>
+
+      <div style="border-top:1px solid #b8ddbf;padding-top:1.5rem;text-align:left">
+        <p style="font-size:0.8rem;font-weight:600;color:#1a3d22;margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.05em">Endpoints disponibles</p>
+        <div style="display:grid;gap:0.4rem">
+          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
+            <span style="background:#49cc90;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">GET</span>
+            <span style="font-family:monospace;color:#333">/api/articles</span>
+            <span style="color:#666;font-size:0.75rem;margin-left:auto">Lister les articles</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
+            <span style="background:#61affe;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">POST</span>
+            <span style="font-family:monospace;color:#333">/api/articles</span>
+            <span style="color:#666;font-size:0.75rem;margin-left:auto">Créer un article</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
+            <span style="background:#49cc90;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">GET</span>
+            <span style="font-family:monospace;color:#333">/api/articles/search</span>
+            <span style="color:#666;font-size:0.75rem;margin-left:auto">Rechercher</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
+            <span style="background:#49cc90;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">GET</span>
+            <span style="font-family:monospace;color:#333">/api/articles/:id</span>
+            <span style="color:#666;font-size:0.75rem;margin-left:auto">Récupérer par ID</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
+            <span style="background:#fca130;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">PUT</span>
+            <span style="font-family:monospace;color:#333">/api/articles/:id</span>
+            <span style="color:#666;font-size:0.75rem;margin-left:auto">Modifier</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;padding:0.4rem 0.6rem;background:white;border-radius:4px;border:1px solid #d4ebd7">
+            <span style="background:#f93e3e;color:white;padding:0.15rem 0.45rem;border-radius:3px;font-size:0.7rem;font-weight:700;font-family:monospace">DEL</span>
+            <span style="font-family:monospace;color:#333">/api/articles/:id</span>
+            <span style="color:#666;font-size:0.75rem;margin-left:auto">Supprimer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ── MAIN ───────────────────────────────────────────────────────────── -->
